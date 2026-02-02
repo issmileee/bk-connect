@@ -79,17 +79,18 @@ export async function getSchoolSettings() {
 // Update school settings
 export async function updateSchoolSettings(data: {
     schoolName?: string;
-    slotDurationMinutes?: number;
-    defaultStartTime?: string;
+    slotDuration?: number;
 }) {
     const settings = await prisma.schoolSettings.upsert({
-        where: { id: "default" },
-        update: data,
+        where: { id: "default-settings" },
+        update: {
+            schoolName: data.schoolName,
+            slotDuration: data.slotDuration,
+        },
         create: {
-            id: "default",
+            id: "default-settings",
             schoolName: data.schoolName || "SMA BK Connect",
-            slotDurationMinutes: data.slotDurationMinutes || 45,
-            defaultStartTime: data.defaultStartTime || "07:00",
+            slotDuration: data.slotDuration || 45,
         },
     });
 
