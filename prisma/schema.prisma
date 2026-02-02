@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// === USER & AUTH ===
+model User {
+  id        String   @id @default(cuid())
+  nis       String?  @unique // NIS untuk Siswa
+  nisn      String?  @unique // NISN untuk Siswa
+  nip       String?  @unique // NIP untuk Guru BK
+  name      String
+  phone     String?
+  email     String   @unique
+  password  String
+  image     String?   // Profile image (URL or base64)
+  role      Role     @default(SISWA)
+  kelas     String? // contoh: "10 IPA 2"
+
+  // Relations
+  bookings      Booking[]
+  consultations ConsultationResult[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  SISWA
+  GURU_BK
+  ADMIN
+}
+
+// === SLOT MANAGEMENT ===
+model SlotTemplate {
+  id        String   @id @default(cuid())
+  dayOfWeek Int // 1=Senin, 2=Selasa, ... 5=Jumat
+  slotNumber Int? // 1-8 untuk jam pelajaran, NULL untuk slot tambahan
+  slotType  SlotType
+  startTime String // "07:00"
+  endTime   String // "07:45"
+  isActive  Boolean  @default(true)
+
+  // Relations
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([dayOfWeek, slotNumber, slotType])
+}
+
+enum SlotType {
+  JAM_PELAJARAN
+  SEPULANG_SEKOLAH
+}
+
+// === BOOKING SYSTEM ===
+model Booking {
+  id            String        @id @default(cuid())
+  bookingCode   String        @unique // "BK-2024-001"
+  date          DateTime // Tanggal spesifik booking
+  category      Category
+  complaint     String // Keluhan siswa
+  attachmentUrl String? // URL file pendukung
+  status        BookingStatus @default(PENDING)
+
+  // Relations
+  siswa   User         @relation(fields: [siswaId], references: [id])
+  siswaId String
+  slot    SlotTemplate @relation(fields: [slotId], references: [id])
+  slotId  String
+  result  ConsultationResult?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([date, slotId]) // Satu slot per tanggal hanya 1 siswa
+}
+
+enum Category {
+  AKADEMIK
+  KARIR
+  PRIBADI
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// === HASIL KONSELING ===
+model ConsultationResult {
+  id           String       @id @default(cuid())
+  summary      String // Ringkasan masalah
+  solution     String // Solusi yang diberikan
+  followUp     String? // Tindak lanjut
+  resultStatus ResultStatus @default(COMPLETED)
+
+  // Relations
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  bookingId String  @unique
+  guruBk    User    @relation(fields: [guruBkId], references: [id])
+  guruBkId  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ResultStatus {
+  COMPLETED
+  FOLLOW_UP_NEEDED
+  REFERRED_EXTERNAL // Dirujuk ke Psikolog Luar
+}
+
+// === MASTER SETTINGS ===
+model SchoolSettings {
+  id               String @id @default(cuid())
+  schoolName       String
+  slotDuration     Int    @default(45) // menit per slot
+  afterSchoolStart String @default("14:00")
+  afterSchoolEnd   String @default("15:00")
+
+  // Mapping jam pelajaran ke waktu
+  lesson1Start String @default("07:00")
+  lesson2Start String @default("07:45")
+  lesson3Start String @default("08:30")
+  lesson4Start String @default("09:15")
+  lesson5Start String @default("10:15")
+  lesson6Start String @default("11:00")
+  lesson7Start String @default("11:45")
+  lesson8Start String @default("12:30")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
