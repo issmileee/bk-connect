@@ -110,28 +110,7 @@ export default function LoginPage() {
                             </Button>
                         </form>
 
-                        {/* Demo Accounts */}
-                        <div className="mt-6 pt-6 border-t border-gray-100">
-                            <p className="text-sm text-gray-500 text-center mb-3">
-                                Demo Akun (Password: <span className="font-mono font-medium">password123</span>):
-                            </p>
-                            <div className="flex flex-col gap-3 text-xs">
-                                <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                    <p className="font-semibold text-blue-700 mb-1">Guru BK</p>
-                                    <div className="space-y-1">
-                                        <p className="text-blue-600"><span className="font-medium">Email:</span> guru.bk@sekolah.id</p>
-                                        <p className="text-blue-600"><span className="font-medium">NIP:</span> 198501152010011001</p>
-                                    </div>
-                                </div>
-                                <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100">
-                                    <p className="font-semibold text-emerald-700 mb-1">Siswa (Ani)</p>
-                                    <div className="space-y-1">
-                                        <p className="text-emerald-600"><span className="font-medium">Email:</span> ani@siswa.sekolah.id</p>
-                                        <p className="text-emerald-600"><span className="font-medium">NISN:</span> 0012345678</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </CardContent>
                 </Card>
 
