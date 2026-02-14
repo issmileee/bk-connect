@@ -15,8 +15,15 @@ import {
     Users,
     CheckCircle2
 } from "lucide-react";
+<<<<<<< HEAD
 
 export default function LaporanPage() {
+=======
+import { useLanguage } from "@/contexts/LanguageContext";
+
+export default function LaporanPage() {
+    const { t, language } = useLanguage();
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
     const [startDate, setStartDate] = useState(() => {
         const date = new Date();
         date.setDate(1); // First day of month
@@ -52,7 +59,12 @@ export default function LaporanPage() {
     const formatPeriod = () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
+<<<<<<< HEAD
         return `${start.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })} - ${end.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}`;
+=======
+        const locale = language === "en" ? "en-US" : "id-ID";
+        return `${start.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })} - ${end.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}`;
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
     };
 
     return (
@@ -61,10 +73,17 @@ export default function LaporanPage() {
             <div>
                 <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                     <FileBarChart className="w-6 h-6 mr-2 text-blue-600" />
+<<<<<<< HEAD
                     Laporan Konseling
                 </h1>
                 <p className="text-gray-600 mt-1">
                     Generate laporan statistik konseling berdasarkan periode
+=======
+                    {t.guru.laporan.title}
+                </h1>
+                <p className="text-gray-600 mt-1">
+                    {t.guru.laporan.generateDesc}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                 </p>
             </div>
 
@@ -73,14 +92,22 @@ export default function LaporanPage() {
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <Calendar className="w-5 h-5 mr-2 text-blue-600" />
+<<<<<<< HEAD
                         Pilih Periode
+=======
+                        {t.guru.laporan.selectPeriod}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-wrap gap-4 items-end">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
+<<<<<<< HEAD
                                 Tanggal Mulai
+=======
+                                {t.guru.laporan.startDate}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </label>
                             <input
                                 type="date"
@@ -91,7 +118,11 @@ export default function LaporanPage() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
+<<<<<<< HEAD
                                 Tanggal Akhir
+=======
+                                {t.guru.laporan.endDate}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </label>
                             <input
                                 type="date"
@@ -102,7 +133,11 @@ export default function LaporanPage() {
                         </div>
                         <Button onClick={handleGenerateReport} loading={loading}>
                             <TrendingUp className="w-4 h-4 mr-2" />
+<<<<<<< HEAD
                             Generate Laporan
+=======
+                            {t.guru.laporan.generateReport}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </Button>
                     </div>
 
@@ -117,7 +152,11 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
+<<<<<<< HEAD
                             Bulan Ini
+=======
+                            {t.guru.laporan.presets.thisMonth}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </button>
                         <button
                             onClick={() => {
@@ -129,7 +168,11 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
+<<<<<<< HEAD
                             Bulan Lalu
+=======
+                            {t.guru.laporan.presets.lastMonth}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </button>
                         <button
                             onClick={() => {
@@ -151,7 +194,11 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
+<<<<<<< HEAD
                             Semester Ini
+=======
+                            {t.guru.laporan.presets.thisSemester}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </button>
                     </div>
                 </CardContent>
@@ -166,7 +213,11 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
+<<<<<<< HEAD
                                         <p className="text-sm text-blue-600">Total Konseling</p>
+=======
+                                        <p className="text-sm text-blue-600">{t.common.totalThisMonth}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <p className="text-3xl font-bold text-blue-700">{stats.total}</p>
                                     </div>
                                     <Users className="w-10 h-10 text-blue-400" />
@@ -178,7 +229,11 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
+<<<<<<< HEAD
                                         <p className="text-sm text-emerald-600">Selesai</p>
+=======
+                                        <p className="text-sm text-emerald-600">{t.common.completed}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <p className="text-3xl font-bold text-emerald-700">{stats.completed}</p>
                                     </div>
                                     <CheckCircle2 className="w-10 h-10 text-emerald-400" />
@@ -190,7 +245,11 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
+<<<<<<< HEAD
                                         <p className="text-sm text-yellow-600">Menunggu</p>
+=======
+                                        <p className="text-sm text-yellow-600">{t.common.waiting}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <p className="text-3xl font-bold text-yellow-700">{stats.pending}</p>
                                     </div>
                                     <Calendar className="w-10 h-10 text-yellow-400" />
@@ -202,7 +261,11 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
+<<<<<<< HEAD
                                         <p className="text-sm text-purple-600">Tingkat Penyelesaian</p>
+=======
+                                        <p className="text-sm text-purple-600">{t.guru.laporan.completionRate}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <p className="text-3xl font-bold text-purple-700">
                                             {stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%
                                         </p>
@@ -216,7 +279,11 @@ export default function LaporanPage() {
                     {/* Category Breakdown */}
                     <Card>
                         <CardHeader>
+<<<<<<< HEAD
                             <CardTitle>Breakdown per Kategori</CardTitle>
+=======
+                            <CardTitle>{t.guru.laporan.perCategory}</CardTitle>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
@@ -227,7 +294,11 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
+<<<<<<< HEAD
                                             <span className="font-medium text-gray-700">Akademik</span>
+=======
+                                            <span className="font-medium text-gray-700">{t.common.akademik}</span>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.akademik}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -239,7 +310,11 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
+<<<<<<< HEAD
                                             {stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}% dari total
+=======
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         </p>
                                     </div>
                                 </div>
@@ -251,7 +326,11 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
+<<<<<<< HEAD
                                             <span className="font-medium text-gray-700">Karir</span>
+=======
+                                            <span className="font-medium text-gray-700">{t.common.karir}</span>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.karir}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -263,7 +342,11 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
+<<<<<<< HEAD
                                             {stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}% dari total
+=======
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         </p>
                                     </div>
                                 </div>
@@ -275,7 +358,11 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
+<<<<<<< HEAD
                                             <span className="font-medium text-gray-700">Pribadi</span>
+=======
+                                            <span className="font-medium text-gray-700">{t.common.pribadi}</span>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.pribadi}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -287,7 +374,11 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
+<<<<<<< HEAD
                                             {stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}% dari total
+=======
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         </p>
                                     </div>
                                 </div>
@@ -299,19 +390,33 @@ export default function LaporanPage() {
                     <Card className="p-4">
                         <div className="flex items-center justify-between">
                             <div>
+<<<<<<< HEAD
                                 <h3 className="font-medium text-gray-900">Ekspor Laporan</h3>
                                 <p className="text-sm text-gray-500">
                                     Periode: {formatPeriod()}
+=======
+                                <h3 className="font-medium text-gray-900">{t.guru.laporan.exportReport}</h3>
+                                <p className="text-sm text-gray-500">
+                                    {language === "en" ? "Period" : "Periode"}: {formatPeriod()}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 </p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline">
                                     <Download className="w-4 h-4 mr-2" />
+<<<<<<< HEAD
                                     Download PDF
                                 </Button>
                                 <Button variant="outline">
                                     <Download className="w-4 h-4 mr-2" />
                                     Download Excel
+=======
+                                    {t.guru.laporan.downloadPDF}
+                                </Button>
+                                <Button variant="outline">
+                                    <Download className="w-4 h-4 mr-2" />
+                                    {t.guru.laporan.downloadExcel}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 </Button>
                             </div>
                         </div>
@@ -324,10 +429,17 @@ export default function LaporanPage() {
                 <Card className="p-12 text-center">
                     <FileBarChart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-gray-900 mb-2">
+<<<<<<< HEAD
                         Generate Laporan
                     </h3>
                     <p className="text-gray-500">
                         Pilih periode tanggal dan klik "Generate Laporan" untuk melihat statistik
+=======
+                        {t.guru.laporan.generateReport}
+                    </h3>
+                    <p className="text-gray-500">
+                        {t.guru.laporan.emptyState}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                     </p>
                 </Card>
             )}

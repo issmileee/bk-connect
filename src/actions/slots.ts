@@ -79,6 +79,7 @@ export async function getSchoolSettings() {
 // Update school settings
 export async function updateSchoolSettings(data: {
     schoolName?: string;
+<<<<<<< HEAD
     slotDuration?: number;
 }) {
     const settings = await prisma.schoolSettings.upsert({
@@ -91,6 +92,19 @@ export async function updateSchoolSettings(data: {
             id: "default-settings",
             schoolName: data.schoolName || "SMA BK Connect",
             slotDuration: data.slotDuration || 45,
+=======
+    slotDurationMinutes?: number;
+    defaultStartTime?: string;
+}) {
+    const settings = await prisma.schoolSettings.upsert({
+        where: { id: "default" },
+        update: data,
+        create: {
+            id: "default",
+            schoolName: data.schoolName || "SMA BK Connect",
+            slotDurationMinutes: data.slotDurationMinutes || 45,
+            defaultStartTime: data.defaultStartTime || "07:00",
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
         },
     });
 

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface GuruNavbarProps {
     user: {
@@ -28,14 +29,15 @@ interface GuruNavbarProps {
 export default function GuruNavbar({ user }: GuruNavbarProps) {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const { t } = useLanguage();
 
     const navItems = [
-        { href: "/guru/dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { href: "/guru/antrian", label: "Antrian", icon: ClipboardList },
-        { href: "/guru/slots", label: "Jadwal", icon: CalendarCog },
-        { href: "/guru/siswa", label: "Siswa", icon: Users },
-        { href: "/guru/laporan", label: "Laporan", icon: FileBarChart },
-        { href: "/guru/profile", label: "Profil", icon: User },
+        { href: "/guru/dashboard", label: t.guru.nav.dashboard, icon: LayoutDashboard },
+        { href: "/guru/antrian", label: t.guru.nav.antrian, icon: ClipboardList },
+        { href: "/guru/slots", label: t.guru.nav.jadwal, icon: CalendarCog },
+        { href: "/guru/siswa", label: t.guru.nav.siswa, icon: Users },
+        { href: "/guru/laporan", label: t.guru.nav.laporan, icon: FileBarChart },
+        { href: "/guru/profile", label: t.guru.nav.profil, icon: User },
     ];
 
     const isActive = (href: string) => pathname.startsWith(href);
@@ -51,7 +53,7 @@ export default function GuruNavbar({ user }: GuruNavbarProps) {
                         </div>
                         <div className="hidden sm:block">
                             <p className="font-bold">BK-Connect</p>
-                            <p className="text-xs text-slate-400">Guru BK Panel</p>
+                            <p className="text-xs text-slate-400">{t.guru.nav.panel}</p>
                         </div>
                     </Link>
 
@@ -78,12 +80,12 @@ export default function GuruNavbar({ user }: GuruNavbarProps) {
                     <div className="flex items-center gap-3">
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-medium">{user.name}</p>
-                            <p className="text-xs text-slate-400">Guru BK</p>
+                            <p className="text-xs text-slate-400">{t.login.teacher}</p>
                         </div>
                         <button
-                            onClick={() => signOut({ callbackUrl: "/login" })}
+                            onClick={() => signOut({ callbackUrl: window.location.origin + "/login" })}
                             className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-700 rounded-xl transition-all"
-                            title="Keluar"
+                            title={t.common.logout}
                         >
                             <LogOut className="w-5 h-5" />
                         </button>

@@ -1,6 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/providers/AuthProvider";
+<<<<<<< HEAD
+=======
+import { LanguageProvider } from "@/contexts/LanguageContext";
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +21,13 @@ export default function RootLayout({
     return (
         <html lang="id">
             <body className={inter.className}>
+<<<<<<< HEAD
                 <AuthProvider>{children}</AuthProvider>
+=======
+                <LanguageProvider>
+                    <AuthProvider>{children}</AuthProvider>
+                </LanguageProvider>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
             </body>
         </html>
     );

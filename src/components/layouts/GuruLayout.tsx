@@ -17,6 +17,10 @@ import {
     Bell,
 } from "lucide-react";
 import { useState } from "react";
+<<<<<<< HEAD
+=======
+import { useLanguage } from "@/contexts/LanguageContext";
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 
 interface GuruLayoutProps {
     children: React.ReactNode;
@@ -26,6 +30,7 @@ interface GuruLayoutProps {
     notificationCount?: number;
 }
 
+<<<<<<< HEAD
 const navigation = [
     { name: "Dashboard", href: "/guru/dashboard", icon: LayoutDashboard },
     { name: "Kelola Slot", href: "/guru/slots", icon: CalendarCog },
@@ -37,6 +42,20 @@ const navigation = [
 export default function GuruLayout({ children, user, notificationCount = 0 }: GuruLayoutProps) {
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+=======
+export default function GuruLayout({ children, user, notificationCount = 0 }: GuruLayoutProps) {
+    const pathname = usePathname();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { t } = useLanguage();
+
+    const navigation = [
+        { name: t.guru.nav.dashboard, href: "/guru/dashboard", icon: LayoutDashboard },
+        { name: t.guru.nav.jadwal, href: "/guru/slots", icon: CalendarCog },
+        { name: t.guru.nav.antrian, href: "/guru/antrian", icon: ClipboardList },
+        { name: t.guru.nav.siswa, href: "/guru/siswa", icon: Users },
+        { name: t.guru.nav.laporan, href: "/guru/laporan", icon: FileBarChart },
+    ];
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -76,7 +95,11 @@ export default function GuruLayout({ children, user, notificationCount = 0 }: Gu
                     <div className="p-4 border-b border-slate-700">
                         <div className="p-3 bg-slate-800/50 rounded-xl">
                             <p className="font-medium text-white">{user.name}</p>
+<<<<<<< HEAD
                             <p className="text-sm text-slate-400">Guru BK</p>
+=======
+                            <p className="text-sm text-slate-400">{t.login.teacher}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </div>
                     </div>
 
@@ -97,7 +120,11 @@ export default function GuruLayout({ children, user, notificationCount = 0 }: Gu
                                 >
                                     <item.icon className="w-5 h-5 mr-3" />
                                     {item.name}
+<<<<<<< HEAD
                                     {item.name === "Antrian Hari Ini" && notificationCount > 0 && (
+=======
+                                    {item.href === "/guru/antrian" && notificationCount > 0 && (
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <span className="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                                             {notificationCount}
                                         </span>
@@ -114,7 +141,11 @@ export default function GuruLayout({ children, user, notificationCount = 0 }: Gu
                             className="flex items-center w-full px-3 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-red-500/20 hover:text-red-400 transition-all"
                         >
                             <LogOut className="w-5 h-5 mr-3" />
+<<<<<<< HEAD
                             Keluar
+=======
+                            {t.common.logout}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </button>
                     </div>
                 </div>
@@ -132,7 +163,11 @@ export default function GuruLayout({ children, user, notificationCount = 0 }: Gu
                             <Menu className="w-5 h-5" />
                         </button>
                         <h1 className="ml-2 lg:ml-0 text-lg font-semibold text-gray-900">
+<<<<<<< HEAD
                             Panel Guru BK
+=======
+                            {t.guru.nav.panel}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </h1>
                     </div>
                     <div className="flex items-center space-x-3">

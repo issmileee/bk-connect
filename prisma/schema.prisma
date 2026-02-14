@@ -3,9 +3,14 @@ generator client {
 }
 
 datasource db {
+<<<<<<< HEAD
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+=======
+  provider = "sqlite"
+  url      = "file:./dev.db"
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 }
 
 // === USER & AUTH ===

@@ -17,8 +17,15 @@ import {
 } from "lucide-react";
 import { getProfile, updateProfile, changePassword } from "@/actions/profile";
 import { cn } from "@/lib/utils";
+<<<<<<< HEAD
 
 export default function GuruProfilePage() {
+=======
+import { useLanguage } from "@/contexts/LanguageContext";
+
+export default function GuruProfilePage() {
+    const { t } = useLanguage();
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
     const [profile, setProfile] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
@@ -52,9 +59,15 @@ export default function GuruProfilePage() {
 
         const result = await updateProfile(formData);
         if (result.success) {
+<<<<<<< HEAD
             setMessage({ type: "success", text: "Profil berhasil diperbarui" });
         } else {
             setMessage({ type: "error", text: result.error || "Gagal memperbarui profil" });
+=======
+            setMessage({ type: "success", text: t.guru.profile.successUpdate });
+        } else {
+            setMessage({ type: "error", text: result.error || t.guru.profile.errorUpdate });
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
         }
         setUpdating(false);
     };
@@ -62,7 +75,11 @@ export default function GuruProfilePage() {
     const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (passwordData.newPassword !== passwordData.confirmPassword) {
+<<<<<<< HEAD
             setMessage({ type: "error", text: "Konfirmasi password tidak cocok" });
+=======
+            setMessage({ type: "error", text: t.guru.profile.passwordMismatch });
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
             return;
         }
 
@@ -73,10 +90,17 @@ export default function GuruProfilePage() {
 
         const result = await changePassword(formData);
         if (result.success) {
+<<<<<<< HEAD
             setMessage({ type: "success", text: "Password berhasil diganti" });
             setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
         } else {
             setMessage({ type: "error", text: result.error || "Gagal mengganti password" });
+=======
+            setMessage({ type: "success", text: t.guru.profile.successPassword });
+            setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+        } else {
+            setMessage({ type: "error", text: result.error || t.guru.profile.errorPassword });
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
         }
         setUpdating(false);
     };
@@ -103,8 +127,13 @@ export default function GuruProfilePage() {
     return (
         <div className="max-w-4xl mx-auto space-y-6 pb-12">
             <div>
+<<<<<<< HEAD
                 <h1 className="text-2xl font-bold text-gray-900">Profil Guru BK</h1>
                 <p className="text-gray-600">Kelola informasi pribadi dan pengaturan akun pengajar</p>
+=======
+                <h1 className="text-2xl font-bold text-gray-900">{t.guru.profile.title}</h1>
+                <p className="text-gray-600">{t.guru.profile.desc}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
             </div>
 
             {message && (
@@ -148,7 +177,11 @@ export default function GuruProfilePage() {
                             </div>
                             <div className="mt-4">
                                 <h2 className="text-lg font-bold text-gray-900">{profile?.name}</h2>
+<<<<<<< HEAD
                                 <p className="text-sm text-gray-500">Guru Bimbingan Konseling</p>
+=======
+                                <p className="text-sm text-gray-500">{t.guru.profile.role}</p>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </div>
                         </CardContent>
                     </Card>
@@ -157,7 +190,11 @@ export default function GuruProfilePage() {
                         <CardHeader className="pb-2">
                             <CardTitle className="text-sm font-medium text-gray-500 uppercase flex items-center gap-2">
                                 <ShieldCheck className="w-4 h-4" />
+<<<<<<< HEAD
                                 Identitas Guru
+=======
+                                {t.guru.profile.identity}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -175,20 +212,32 @@ export default function GuruProfilePage() {
                 <div className="md:col-span-2 space-y-6">
                     <Card>
                         <CardHeader>
+<<<<<<< HEAD
                             <CardTitle>Informasi Umum</CardTitle>
+=======
+                            <CardTitle>{t.guru.profile.generalInfo}</CardTitle>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleUpdateProfile} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Input
+<<<<<<< HEAD
                                         label="Nama Lengkap"
+=======
+                                        label={t.guru.profile.name}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         name="name"
                                         defaultValue={profile?.name}
                                         icon={<User className="w-4 h-4" />}
                                         required
                                     />
                                     <Input
+<<<<<<< HEAD
                                         label="Email"
+=======
+                                        label={t.guru.profile.email}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         name="email"
                                         type="email"
                                         defaultValue={profile?.email}
@@ -196,7 +245,11 @@ export default function GuruProfilePage() {
                                         required
                                     />
                                     <Input
+<<<<<<< HEAD
                                         label="No. HP / WhatsApp"
+=======
+                                        label={t.guru.profile.phone}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         name="phone"
                                         defaultValue={profile?.phone}
                                         icon={<Phone className="w-4 h-4" />}
@@ -204,7 +257,11 @@ export default function GuruProfilePage() {
                                     />
                                     <div className="relative">
                                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
+<<<<<<< HEAD
                                             NIP (Readonly)
+=======
+                                            NIP ({t.guru.profile.readonly})
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -218,7 +275,11 @@ export default function GuruProfilePage() {
                                 </div>
                                 <div className="flex justify-end pt-2">
                                     <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700" disabled={updating}>
+<<<<<<< HEAD
                                         {updating ? "Menyimpan..." : "Simpan Perubahan"}
+=======
+                                        {updating ? t.common.saving : t.common.saveChanges}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                     </Button>
                                 </div>
                             </form>
@@ -227,14 +288,22 @@ export default function GuruProfilePage() {
 
                     <Card>
                         <CardHeader>
+<<<<<<< HEAD
                             <CardTitle>Ganti Password</CardTitle>
+=======
+                            <CardTitle>{t.guru.profile.changePassword}</CardTitle>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleChangePassword} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <Input
+<<<<<<< HEAD
                                             label="Password Saat Ini"
+=======
+                                            label={t.guru.profile.currentPassword}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             type="password"
                                             value={passwordData.currentPassword}
                                             onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
@@ -243,7 +312,11 @@ export default function GuruProfilePage() {
                                         />
                                     </div>
                                     <Input
+<<<<<<< HEAD
                                         label="Password Baru"
+=======
+                                        label={t.guru.profile.newPassword}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         type="password"
                                         value={passwordData.newPassword}
                                         onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
@@ -251,7 +324,11 @@ export default function GuruProfilePage() {
                                         required
                                     />
                                     <Input
+<<<<<<< HEAD
                                         label="Konfirmasi Password Baru"
+=======
+                                        label={t.guru.profile.confirmPassword}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         type="password"
                                         value={passwordData.confirmPassword}
                                         onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
@@ -261,7 +338,11 @@ export default function GuruProfilePage() {
                                 </div>
                                 <div className="flex justify-end pt-2">
                                     <Button type="submit" variant="outline" disabled={updating}>
+<<<<<<< HEAD
                                         {updating ? "Memproses..." : "Ganti Password"}
+=======
+                                        {updating ? t.common.processing : t.guru.profile.changePassword}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                     </Button>
                                 </div>
                             </form>

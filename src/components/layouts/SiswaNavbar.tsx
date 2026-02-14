@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SiswaNavbarProps {
     user: {
@@ -27,12 +28,13 @@ interface SiswaNavbarProps {
 export default function SiswaNavbar({ user }: SiswaNavbarProps) {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const { t } = useLanguage();
 
     const navItems = [
-        { href: "/siswa/dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { href: "/siswa/booking/kategori", label: "Booking Baru", icon: CalendarPlus },
-        { href: "/siswa/history", label: "Riwayat", icon: History },
-        { href: "/siswa/profile", label: "Profil", icon: User },
+        { href: "/siswa/dashboard", label: t.siswa.nav.dashboard, icon: LayoutDashboard },
+        { href: "/siswa/booking/kategori", label: t.siswa.nav.booking, icon: CalendarPlus },
+        { href: "/siswa/history", label: t.siswa.nav.riwayat, icon: History },
+        { href: "/siswa/profile", label: t.siswa.nav.profil, icon: User },
     ];
 
     const isActive = (href: string) => pathname.startsWith(href.split('/').slice(0, 3).join('/'));
@@ -48,7 +50,7 @@ export default function SiswaNavbar({ user }: SiswaNavbarProps) {
                         </div>
                         <div className="hidden sm:block">
                             <p className="font-bold text-gray-900">BK-Connect</p>
-                            <p className="text-xs text-gray-500">Siswa Panel</p>
+                            <p className="text-xs text-gray-500">{t.siswa.nav.panel}</p>
                         </div>
                     </Link>
 
@@ -75,12 +77,12 @@ export default function SiswaNavbar({ user }: SiswaNavbarProps) {
                     <div className="flex items-center gap-3">
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                            <p className="text-xs text-gray-500">{user.kelas && `Kelas ${user.kelas}`}</p>
+                            <p className="text-xs text-gray-500">{user.kelas && `${t.siswa.nav.kelas} ${user.kelas}`}</p>
                         </div>
                         <button
-                            onClick={() => signOut({ callbackUrl: "/login" })}
+                            onClick={() => signOut({ callbackUrl: window.location.origin + "/login" })}
                             className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
-                            title="Keluar"
+                            title={t.common.logout}
                         >
                             <LogOut className="w-5 h-5" />
                         </button>

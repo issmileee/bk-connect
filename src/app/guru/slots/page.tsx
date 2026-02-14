@@ -14,6 +14,10 @@ import {
     Loader2
 } from "lucide-react";
 import { getDayName, getSlotTypeLabel } from "@/lib/utils";
+<<<<<<< HEAD
+=======
+import { useLanguage } from "@/contexts/LanguageContext";
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 
 interface SlotTemplate {
     id: string;
@@ -26,6 +30,10 @@ interface SlotTemplate {
 }
 
 export default function SlotsPage() {
+<<<<<<< HEAD
+=======
+    const { t, language } = useLanguage();
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
     const [slots, setSlots] = useState<SlotTemplate[]>([]);
     const [loading, setLoading] = useState(true);
     const [togglingSlot, setTogglingSlot] = useState<string | null>(null);
@@ -62,7 +70,11 @@ export default function SlotsPage() {
         }
     };
 
+<<<<<<< HEAD
     const days = [1, 2, 3, 4, 5]; // Senin - Jumat
+=======
+    const days = [1, 2, 3, 4, 5]; // Monday - Friday
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 
     const getSlotsByDay = (dayOfWeek: number) => {
         return slots
@@ -92,10 +104,17 @@ export default function SlotsPage() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                         <CalendarCog className="w-6 h-6 mr-2 text-blue-600" />
+<<<<<<< HEAD
                         Kelola Slot Jadwal
                     </h1>
                     <p className="text-gray-600 mt-1">
                         Aktifkan atau nonaktifkan slot konseling sesuai ketersediaan Anda
+=======
+                        {t.guru.slots.title}
+                    </h1>
+                    <p className="text-gray-600 mt-1">
+                        {t.guru.slots.desc}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                     </p>
                 </div>
             </div>
@@ -104,11 +123,19 @@ export default function SlotsPage() {
             <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-emerald-500 rounded"></div>
+<<<<<<< HEAD
                     <span className="text-gray-600">Aktif (Bisa Dipesan)</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-300 rounded"></div>
                     <span className="text-gray-600">Nonaktif (Tidak Tersedia)</span>
+=======
+                    <span className="text-gray-600">{t.guru.slots.active}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-gray-300 rounded"></div>
+                    <span className="text-gray-600">{t.guru.slots.inactive}</span>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                 </div>
             </div>
 
@@ -122,7 +149,11 @@ export default function SlotsPage() {
                         <Card key={day}>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-lg flex items-center justify-between">
+<<<<<<< HEAD
                                     <span>{getDayName(day)}</span>
+=======
+                                    <span>{getDayName(day, t)}</span>
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                     <span className="text-sm font-normal text-gray-500">
                                         {activeCount}/{daySlots.length}
                                     </span>
@@ -135,8 +166,13 @@ export default function SlotsPage() {
                                         onClick={() => handleToggle(slot.id, slot.isActive)}
                                         disabled={togglingSlot === slot.id}
                                         className={`w-full p-3 rounded-xl text-left transition-all ${slot.isActive
+<<<<<<< HEAD
                                                 ? "bg-emerald-50 border-2 border-emerald-200 hover:bg-emerald-100"
                                                 : "bg-gray-50 border-2 border-gray-200 hover:bg-gray-100"
+=======
+                                            ? "bg-emerald-50 border-2 border-emerald-200 hover:bg-emerald-100"
+                                            : "bg-gray-50 border-2 border-gray-200 hover:bg-gray-100"
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             }`}
                                     >
                                         <div className="flex items-center justify-between mb-1">
@@ -147,10 +183,17 @@ export default function SlotsPage() {
                                                 {slot.slotType === "SEPULANG_SEKOLAH" ? (
                                                     <span className="flex items-center">
                                                         <Sun className="w-3 h-3 mr-1" />
+<<<<<<< HEAD
                                                         Sepulang
                                                     </span>
                                                 ) : (
                                                     `Jam ke-${slot.slotNumber}`
+=======
+                                                        {t.common.slotTypes.sepulangSekolah}
+                                                    </span>
+                                                ) : (
+                                                    t.common.slotTypes.jamPelajaran.replace("{n}", slot.slotNumber?.toString() || "")
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                                 )}
                                             </span>
                                             {togglingSlot === slot.id ? (
@@ -190,7 +233,11 @@ export default function SlotsPage() {
                             loadSlots();
                         }}
                     >
+<<<<<<< HEAD
                         Aktifkan Semua
+=======
+                        {t.guru.slots.activateAll}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                     </Button>
                     <Button
                         variant="outline"
@@ -202,7 +249,11 @@ export default function SlotsPage() {
                             loadSlots();
                         }}
                     >
+<<<<<<< HEAD
                         Nonaktifkan Semua
+=======
+                        {t.guru.slots.deactivateAll}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                     </Button>
                 </div>
             </Card>
@@ -210,8 +261,12 @@ export default function SlotsPage() {
             {/* Info */}
             <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
                 <p className="text-sm text-blue-700">
+<<<<<<< HEAD
                     💡 <strong>Tips:</strong> Klik pada slot untuk mengaktifkan/menonaktifkan.
                     Siswa hanya bisa booking slot yang statusnya aktif (hijau).
+=======
+                    💡 <strong>{language === "en" ? "Tips" : "Tips"}:</strong> {t.guru.slots.tips}
+>>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                 </p>
             </div>
         </div>

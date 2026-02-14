@@ -14,6 +14,7 @@ import {
     X,
 } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SiswaLayoutProps {
     children: React.ReactNode;
@@ -23,15 +24,16 @@ interface SiswaLayoutProps {
     };
 }
 
-const navigation = [
-    { name: "Dashboard", href: "/siswa/dashboard", icon: LayoutDashboard },
-    { name: "Booking Baru", href: "/siswa/booking/kategori", icon: CalendarPlus },
-    { name: "Riwayat", href: "/siswa/history", icon: History },
-];
-
 export default function SiswaLayout({ children, user }: SiswaLayoutProps) {
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { t } = useLanguage();
+
+    const navigation = [
+        { name: t.siswa.nav.dashboard, href: "/siswa/dashboard", icon: LayoutDashboard },
+        { name: t.siswa.nav.booking, href: "/siswa/booking/kategori", icon: CalendarPlus },
+        { name: t.siswa.nav.riwayat, href: "/siswa/history", icon: History },
+    ];
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
@@ -72,7 +74,7 @@ export default function SiswaLayout({ children, user }: SiswaLayoutProps) {
                         <div className="p-3 bg-gradient-to-r from-blue-50 to-emerald-50 rounded-xl">
                             <p className="font-medium text-gray-900">{user.name}</p>
                             {user.kelas && (
-                                <p className="text-sm text-gray-500">Kelas {user.kelas}</p>
+                                <p className="text-sm text-gray-500">{t.siswa.nav.kelas} {user.kelas}</p>
                             )}
                         </div>
                     </div>
@@ -106,7 +108,7 @@ export default function SiswaLayout({ children, user }: SiswaLayoutProps) {
                             className="flex items-center w-full px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-all"
                         >
                             <LogOut className="w-5 h-5 mr-3" />
-                            Keluar
+                            {t.common.logout}
                         </button>
                     </div>
                 </div>
