@@ -14,15 +14,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { formatDate, getSlotTypeLabel } from "@/lib/utils";
-<<<<<<< HEAD
-
-export default async function GuruDashboard() {
-=======
 import { getTranslations } from "@/lib/getTranslations";
 
 export default async function GuruDashboard() {
     const { t, language } = await getTranslations();
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
     const todayBookings = await getTodayBookings();
 
     // Get stats for current month
@@ -43,15 +38,9 @@ export default async function GuruDashboard() {
         <div className="space-y-6">
             {/* Welcome Header */}
             <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-6 text-white">
-<<<<<<< HEAD
-                <h1 className="text-2xl font-bold mb-2">Dashboard Guru BK</h1>
-                <p className="text-slate-300">
-                    {formatDate(new Date())} • {todayBookings.length} booking hari ini
-=======
                 <h1 className="text-2xl font-bold mb-2">{t.guru.dashboard.title}</h1>
                 <p className="text-slate-300">
                     {formatDate(new Date(), language === "en" ? "en-US" : "id-ID")} • {todayBookings.length} {t.guru.dashboard.todayBooking}
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                 </p>
             </div>
 
@@ -61,27 +50,16 @@ export default async function GuruDashboard() {
                     <AlertTriangle className="w-6 h-6 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
                     <div>
                         <h3 className="font-semibold text-red-800">
-<<<<<<< HEAD
-                            ⚠️ Perhatian! {urgentBookings.length} siswa membutuhkan penanganan segera
-                        </h3>
-                        <p className="text-red-700 text-sm mt-1">
-                            Ditemukan kata-kata sensitif dalam keluhan siswa
-=======
                             ⚠️ {t.common.urgent} {urgentBookings.length} {t.common.needsImmediate}
                         </h3>
                         <p className="text-red-700 text-sm mt-1">
                             {t.common.sensitiveKeywords}
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </p>
                         <Link
                             href="/guru/antrian"
                             className="text-red-800 font-medium hover:underline text-sm mt-2 inline-block"
                         >
-<<<<<<< HEAD
-                            Lihat detail →
-=======
                             {t.common.viewDetail} →
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </Link>
                     </div>
                 </div>
@@ -93,11 +71,7 @@ export default async function GuruDashboard() {
                     <CardContent className="p-5">
                         <div className="flex items-center justify-between">
                             <div>
-<<<<<<< HEAD
-                                <p className="text-sm text-gray-500">Hari Ini</p>
-=======
                                 <p className="text-sm text-gray-500">{t.common.today}</p>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 <p className="text-2xl font-bold text-gray-900">{todayBookings.length}</p>
                             </div>
                             <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -111,11 +85,7 @@ export default async function GuruDashboard() {
                     <CardContent className="p-5">
                         <div className="flex items-center justify-between">
                             <div>
-<<<<<<< HEAD
-                                <p className="text-sm text-gray-500">Menunggu</p>
-=======
                                 <p className="text-sm text-gray-500">{t.common.waiting}</p>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 <p className="text-2xl font-bold text-yellow-600">{pendingCount}</p>
                             </div>
                             <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
@@ -129,11 +99,7 @@ export default async function GuruDashboard() {
                     <CardContent className="p-5">
                         <div className="flex items-center justify-between">
                             <div>
-<<<<<<< HEAD
-                                <p className="text-sm text-gray-500">Selesai Bulan Ini</p>
-=======
                                 <p className="text-sm text-gray-500">{t.common.completedThisMonth}</p>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 <p className="text-2xl font-bold text-emerald-600">{stats.completed}</p>
                             </div>
                             <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
@@ -147,11 +113,7 @@ export default async function GuruDashboard() {
                     <CardContent className="p-5">
                         <div className="flex items-center justify-between">
                             <div>
-<<<<<<< HEAD
-                                <p className="text-sm text-gray-500">Total Bulan Ini</p>
-=======
                                 <p className="text-sm text-gray-500">{t.common.totalThisMonth}</p>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                 <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
                             </div>
                             <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
@@ -169,17 +131,10 @@ export default async function GuruDashboard() {
                         <CardTitle className="flex items-center justify-between">
                             <span className="flex items-center">
                                 <Clock className="w-5 h-5 mr-2 text-blue-600" />
-<<<<<<< HEAD
-                                Antrian Hari Ini
-                            </span>
-                            <Link href="/guru/antrian" className="text-sm text-blue-600 hover:underline font-normal">
-                                Lihat semua
-=======
                                 {t.guru.dashboard.todayQueue}
                             </span>
                             <Link href="/guru/antrian" className="text-sm text-blue-600 hover:underline font-normal">
                                 {t.common.seeAll}
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </Link>
                         </CardTitle>
                     </CardHeader>
@@ -196,13 +151,8 @@ export default async function GuruDashboard() {
                                             key={booking.id}
                                             href={`/guru/konseling/${booking.id}`}
                                             className={`block p-3 rounded-xl border transition-all hover:shadow-md ${isUrgent
-<<<<<<< HEAD
-                                                    ? "bg-red-50 border-red-200"
-                                                    : "bg-gray-50 border-gray-100 hover:bg-gray-100"
-=======
                                                 ? "bg-red-50 border-red-200"
                                                 : "bg-gray-50 border-gray-100 hover:bg-gray-100"
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between mb-2">
@@ -218,19 +168,11 @@ export default async function GuruDashboard() {
                                                     variant={booking.category.toLowerCase() as "akademik" | "karir" | "pribadi"}
                                                     size="sm"
                                                 >
-<<<<<<< HEAD
-                                                    {booking.category}
-                                                </Badge>
-                                            </div>
-                                            <p className="text-sm text-gray-500">
-                                                {getSlotTypeLabel(booking.slot.slotType, booking.slot.slotNumber)} • {booking.slot.startTime}
-=======
                                                     {t.common[booking.category.toLowerCase() as "akademik" | "karir" | "pribadi"] || booking.category}
                                                 </Badge>
                                             </div>
                                             <p className="text-sm text-gray-500">
                                                 {getSlotTypeLabel(booking.slot.slotType, booking.slot.slotNumber, t)} • {booking.slot.startTime}
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                             </p>
                                         </Link>
                                     );
@@ -239,11 +181,7 @@ export default async function GuruDashboard() {
                         ) : (
                             <div className="text-center py-8 text-gray-500">
                                 <CalendarCheck className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-<<<<<<< HEAD
-                                <p>Tidak ada jadwal konseling hari ini</p>
-=======
                                 <p>{t.common.noScheduleToday}</p>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                             </div>
                         )}
                     </CardContent>
@@ -254,11 +192,7 @@ export default async function GuruDashboard() {
                     <CardHeader>
                         <CardTitle className="flex items-center">
                             <Users className="w-5 h-5 mr-2 text-emerald-600" />
-<<<<<<< HEAD
-                            Statistik Kategori (Bulan Ini)
-=======
                             {t.guru.dashboard.statsTitle}
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -270,11 +204,7 @@ export default async function GuruDashboard() {
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex justify-between mb-1">
-<<<<<<< HEAD
-                                        <span className="text-sm font-medium text-gray-700">Akademik</span>
-=======
                                         <span className="text-sm font-medium text-gray-700">{t.common.akademik}</span>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <span className="text-sm text-gray-500">{stats.categoryBreakdown.akademik}</span>
                                     </div>
                                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -295,11 +225,7 @@ export default async function GuruDashboard() {
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex justify-between mb-1">
-<<<<<<< HEAD
-                                        <span className="text-sm font-medium text-gray-700">Karir</span>
-=======
                                         <span className="text-sm font-medium text-gray-700">{t.common.karir}</span>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <span className="text-sm text-gray-500">{stats.categoryBreakdown.karir}</span>
                                     </div>
                                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -320,11 +246,7 @@ export default async function GuruDashboard() {
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex justify-between mb-1">
-<<<<<<< HEAD
-                                        <span className="text-sm font-medium text-gray-700">Pribadi</span>
-=======
                                         <span className="text-sm font-medium text-gray-700">{t.common.pribadi}</span>
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
                                         <span className="text-sm text-gray-500">{stats.categoryBreakdown.pribadi}</span>
                                     </div>
                                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">

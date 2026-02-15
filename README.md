@@ -415,11 +415,7 @@ Fleksibilitas dalam mengatur slot waktu konseling:
 - [ ] Mobile app (React Native)
 - [ ] Chat/messaging antara siswa dan Guru BK
 - [ ] Kalender integrasi untuk melihat jadwal
-<<<<<<< HEAD
-- [ ] Multi-language support
-=======
 - [x] Multi-language support (English & Indonesian)
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 - [ ] Dark mode
 
 ---

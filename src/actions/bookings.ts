@@ -144,8 +144,6 @@ export async function getStudentBookings(siswaId: string) {
     return bookings;
 }
 
-<<<<<<< HEAD
-=======
 // Get current/next upcoming booking for student
 export async function getCurrentBooking() {
     const session = await auth();
@@ -168,8 +166,6 @@ export async function getCurrentBooking() {
 
     return booking;
 }
-
->>>>>>> 072066b (Feature: Adding tranlasi UI (English & Indonesia))
 // Get today's bookings for Guru BK
 export async function getTodayBookings() {
     const today = new Date();
