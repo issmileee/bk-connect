@@ -6,13 +6,17 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { BookOpen, User, Lock, Loader2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
 export default function LoginPage() {
+    const { language, setLanguage, t } = useLanguage();
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -29,28 +33,32 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError("Email atau password salah");
+                setError(t.login.errorAuth);
             } else {
                 router.push("/");
                 router.refresh();
             }
         } catch (error) {
-            setError("Terjadi kesalahan. Silakan coba lagi.");
+            setError(t.login.errorGeneral);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-emerald-50 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-emerald-50 p-4 relative">
+            <div className="absolute top-4 right-4 z-10">
+                <LanguageSwitcher className="shadow-md" />
+            </div>
+
             <div className="w-full max-w-md animate-fade-in">
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                         <BookOpen className="w-10 h-10 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold gradient-text">BK-Connect</h1>
-                    <p className="text-gray-600 mt-2">Sistem Booking Konseling Digital</p>
+                    <h1 className="text-3xl font-bold gradient-text">{t.login.title}</h1>
+                    <p className="text-gray-600 mt-2">{t.login.subtitle}</p>
                 </div>
 
                 {/* Login Card */}
@@ -67,7 +75,7 @@ export default function LoginPage() {
                             {/* Email */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email / NISN
+                                    {t.login.emailLabel}
                                 </label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -77,7 +85,7 @@ export default function LoginPage() {
                                         onChange={(e) =>
                                             setFormData({ ...formData, email: e.target.value })
                                         }
-                                        placeholder="Masukkan email atau NISN"
+                                        placeholder={t.login.emailPlaceholder}
                                         className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                         required
                                     />
@@ -87,7 +95,7 @@ export default function LoginPage() {
                             {/* Password */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Password
+                                    {t.login.passwordLabel}
                                 </label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -97,7 +105,7 @@ export default function LoginPage() {
                                         onChange={(e) =>
                                             setFormData({ ...formData, password: e.target.value })
                                         }
-                                        placeholder="Masukkan password"
+                                        placeholder={t.login.passwordPlaceholder}
                                         className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                         required
                                     />
@@ -106,19 +114,18 @@ export default function LoginPage() {
 
                             {/* Submit */}
                             <Button type="submit" className="w-full py-3" loading={loading}>
-                                Masuk
+                                {loading ? t.login.loading : t.login.loginButton}
                             </Button>
                         </form>
-
 
                     </CardContent>
                 </Card>
 
                 {/* Footer */}
                 <p className="text-center text-sm text-gray-500 mt-6">
-                    © 2026 BK-Connect. All rights reserved.
+                    {t.login.footer}
                 </p>
             </div>
-        </div>
+        </div >
     );
 }

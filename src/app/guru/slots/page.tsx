@@ -14,18 +14,20 @@ import {
     Loader2
 } from "lucide-react";
 import { getDayName, getSlotTypeLabel } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SlotTemplate {
     id: string;
     dayOfWeek: number;
     slotNumber: number | null;
-    slotType: string;
+    slotType: "JAM_PELAJARAN" | "SEPULANG_SEKOLAH";
     startTime: string;
     endTime: string;
     isActive: boolean;
 }
 
 export default function SlotsPage() {
+    const { t, language } = useLanguage();
     const [slots, setSlots] = useState<SlotTemplate[]>([]);
     const [loading, setLoading] = useState(true);
     const [togglingSlot, setTogglingSlot] = useState<string | null>(null);
@@ -62,7 +64,7 @@ export default function SlotsPage() {
         }
     };
 
-    const days = [1, 2, 3, 4, 5]; // Senin - Jumat
+    const days = [1, 2, 3, 4, 5]; // Monday - Friday
 
     const getSlotsByDay = (dayOfWeek: number) => {
         return slots
@@ -92,10 +94,10 @@ export default function SlotsPage() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                         <CalendarCog className="w-6 h-6 mr-2 text-blue-600" />
-                        Kelola Slot Jadwal
+                        {t.guru.slots.title}
                     </h1>
                     <p className="text-gray-600 mt-1">
-                        Aktifkan atau nonaktifkan slot konseling sesuai ketersediaan Anda
+                        {t.guru.slots.desc}
                     </p>
                 </div>
             </div>
@@ -104,11 +106,11 @@ export default function SlotsPage() {
             <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-emerald-500 rounded"></div>
-                    <span className="text-gray-600">Aktif (Bisa Dipesan)</span>
+                    <span className="text-gray-600">{t.guru.slots.active}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-300 rounded"></div>
-                    <span className="text-gray-600">Nonaktif (Tidak Tersedia)</span>
+                    <span className="text-gray-600">{t.guru.slots.inactive}</span>
                 </div>
             </div>
 
@@ -122,7 +124,7 @@ export default function SlotsPage() {
                         <Card key={day}>
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-lg flex items-center justify-between">
-                                    <span>{getDayName(day)}</span>
+                                    <span>{getDayName(day, t)}</span>
                                     <span className="text-sm font-normal text-gray-500">
                                         {activeCount}/{daySlots.length}
                                     </span>
@@ -135,8 +137,8 @@ export default function SlotsPage() {
                                         onClick={() => handleToggle(slot.id, slot.isActive)}
                                         disabled={togglingSlot === slot.id}
                                         className={`w-full p-3 rounded-xl text-left transition-all ${slot.isActive
-                                                ? "bg-emerald-50 border-2 border-emerald-200 hover:bg-emerald-100"
-                                                : "bg-gray-50 border-2 border-gray-200 hover:bg-gray-100"
+                                            ? "bg-emerald-50 border-2 border-emerald-200 hover:bg-emerald-100"
+                                            : "bg-gray-50 border-2 border-gray-200 hover:bg-gray-100"
                                             }`}
                                     >
                                         <div className="flex items-center justify-between mb-1">
@@ -147,10 +149,10 @@ export default function SlotsPage() {
                                                 {slot.slotType === "SEPULANG_SEKOLAH" ? (
                                                     <span className="flex items-center">
                                                         <Sun className="w-3 h-3 mr-1" />
-                                                        Sepulang
+                                                        {t.common.slotTypes.sepulangSekolah}
                                                     </span>
                                                 ) : (
-                                                    `Jam ke-${slot.slotNumber}`
+                                                    t.common.slotTypes.jamPelajaran.replace("{n}", slot.slotNumber?.toString() || "")
                                                 )}
                                             </span>
                                             {togglingSlot === slot.id ? (
@@ -190,7 +192,7 @@ export default function SlotsPage() {
                             loadSlots();
                         }}
                     >
-                        Aktifkan Semua
+                        {t.guru.slots.activateAll}
                     </Button>
                     <Button
                         variant="outline"
@@ -202,7 +204,7 @@ export default function SlotsPage() {
                             loadSlots();
                         }}
                     >
-                        Nonaktifkan Semua
+                        {t.guru.slots.deactivateAll}
                     </Button>
                 </div>
             </Card>
@@ -210,8 +212,7 @@ export default function SlotsPage() {
             {/* Info */}
             <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
                 <p className="text-sm text-blue-700">
-                    💡 <strong>Tips:</strong> Klik pada slot untuk mengaktifkan/menonaktifkan.
-                    Siswa hanya bisa booking slot yang statusnya aktif (hijau).
+                    💡 <strong>{language === "en" ? "Tips" : "Tips"}:</strong> {t.guru.slots.tips}
                 </p>
             </div>
         </div>

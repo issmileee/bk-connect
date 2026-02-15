@@ -15,8 +15,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { formatDate, getSlotTypeLabel } from "@/lib/utils";
+import { getTranslations } from "@/lib/getTranslations";
 
 export default async function AntrianPage() {
+    const { t, language } = await getTranslations();
     const bookings = await getTodayBookings();
 
     // Check for urgent keywords
@@ -38,13 +40,13 @@ export default async function AntrianPage() {
     const getStatusBadge = (status: string) => {
         switch (status) {
             case "PENDING":
-                return <Badge variant="warning">Menunggu</Badge>;
+                return <Badge variant="warning">{t.common.waiting}</Badge>;
             case "CONFIRMED":
-                return <Badge variant="info">Dikonfirmasi</Badge>;
+                return <Badge variant="info">{t.common.confirmed}</Badge>;
             case "IN_PROGRESS":
-                return <Badge variant="info">Sedang Berlangsung</Badge>;
+                return <Badge variant="info">{t.common.inProgress}</Badge>;
             case "COMPLETED":
-                return <Badge variant="success">Selesai</Badge>;
+                return <Badge variant="success">{t.common.completed}</Badge>;
             default:
                 return <Badge>{status}</Badge>;
         }
@@ -61,10 +63,10 @@ export default async function AntrianPage() {
             <div>
                 <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                     <ClipboardList className="w-6 h-6 mr-2 text-blue-600" />
-                    Antrian Hari Ini
+                    {t.guru.antrian.title}
                 </h1>
                 <p className="text-gray-600 mt-1">
-                    {formatDate(new Date())} • {bookings.length} total booking
+                    {formatDate(new Date(), language === "en" ? "en-US" : "id-ID")} • {bookings.length} {t.guru.antrian.totalBooking}
                 </p>
             </div>
 
@@ -73,19 +75,19 @@ export default async function AntrianPage() {
                 <Card className="bg-yellow-50 border-yellow-200">
                     <CardContent className="p-4 text-center">
                         <p className="text-2xl font-bold text-yellow-700">{pending.length}</p>
-                        <p className="text-sm text-yellow-600">Menunggu</p>
+                        <p className="text-sm text-yellow-600">{t.guru.antrian.waiting}</p>
                     </CardContent>
                 </Card>
                 <Card className="bg-blue-50 border-blue-200">
                     <CardContent className="p-4 text-center">
                         <p className="text-2xl font-bold text-blue-700">{inProgress.length}</p>
-                        <p className="text-sm text-blue-600">Berlangsung</p>
+                        <p className="text-sm text-blue-600">{t.guru.antrian.inProgress}</p>
                     </CardContent>
                 </Card>
                 <Card className="bg-emerald-50 border-emerald-200">
                     <CardContent className="p-4 text-center">
                         <p className="text-2xl font-bold text-emerald-700">{completed.length}</p>
-                        <p className="text-sm text-emerald-600">Selesai</p>
+                        <p className="text-sm text-emerald-600">{t.guru.antrian.completed}</p>
                     </CardContent>
                 </Card>
             </div>
@@ -108,10 +110,10 @@ export default async function AntrianPage() {
                                     {/* Category Color Bar */}
                                     <div
                                         className={`w-2 ${booking.category === "AKADEMIK"
-                                                ? "bg-red-500"
-                                                : booking.category === "KARIR"
-                                                    ? "bg-amber-500"
-                                                    : "bg-emerald-500"
+                                            ? "bg-red-500"
+                                            : booking.category === "KARIR"
+                                                ? "bg-amber-500"
+                                                : "bg-emerald-500"
                                             }`}
                                     />
 
@@ -121,7 +123,7 @@ export default async function AntrianPage() {
                                             <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 flex items-center">
                                                 <AlertTriangle className="w-5 h-5 text-red-600 mr-2" />
                                                 <span className="text-red-700 text-sm font-medium">
-                                                    ⚠️ Ditemukan kata-kata sensitif - Perlu penanganan segera
+                                                    ⚠️ {t.common.sensitiveKeywords}
                                                 </span>
                                             </div>
                                         )}
@@ -132,10 +134,10 @@ export default async function AntrianPage() {
                                                 <div className="flex items-center gap-3 mb-2">
                                                     <div
                                                         className={`w-10 h-10 rounded-xl flex items-center justify-center ${booking.category === "AKADEMIK"
-                                                                ? "bg-red-100"
-                                                                : booking.category === "KARIR"
-                                                                    ? "bg-amber-100"
-                                                                    : "bg-emerald-100"
+                                                            ? "bg-red-100"
+                                                            : booking.category === "KARIR"
+                                                                ? "bg-amber-100"
+                                                                : "bg-emerald-100"
                                                             }`}
                                                     >
                                                         {getCategoryIcon(booking.category)}
@@ -147,11 +149,11 @@ export default async function AntrianPage() {
                                                                 variant={booking.category.toLowerCase() as "akademik" | "karir" | "pribadi"}
                                                                 size="sm"
                                                             >
-                                                                {booking.category}
+                                                                {t.common[booking.category.toLowerCase() as "akademik" | "karir" | "pribadi"] || booking.category}
                                                             </Badge>
                                                         </h3>
                                                         <p className="text-sm text-gray-500">
-                                                            {booking.siswa.kelas && `Kelas ${booking.siswa.kelas} • `}
+                                                            {booking.siswa.kelas && `${t.siswa.profile.kelas} ${booking.siswa.kelas} • `}
                                                             {booking.bookingCode}
                                                         </p>
                                                     </div>
@@ -161,7 +163,7 @@ export default async function AntrianPage() {
                                                 <div className="flex items-center text-gray-600 mb-3">
                                                     <Clock className="w-4 h-4 mr-2" />
                                                     <span className="text-sm">
-                                                        {getSlotTypeLabel(booking.slot.slotType, booking.slot.slotNumber)} • {booking.slot.startTime} - {booking.slot.endTime}
+                                                        {getSlotTypeLabel(booking.slot.slotType, booking.slot.slotNumber, t)} • {booking.slot.startTime} - {booking.slot.endTime}
                                                     </span>
                                                 </div>
 
@@ -181,7 +183,7 @@ export default async function AntrianPage() {
                                                 {getStatusBadge(booking.status)}
                                                 <Link href={`/guru/konseling/${booking.id}`}>
                                                     <Button size="sm">
-                                                        {booking.status === "COMPLETED" ? "Lihat Detail" : "Proses"}
+                                                        {booking.status === "COMPLETED" ? t.common.viewDetail : t.common.process}
                                                         <ChevronRight className="w-4 h-4 ml-1" />
                                                     </Button>
                                                 </Link>
@@ -197,10 +199,10 @@ export default async function AntrianPage() {
                 <Card className="p-12 text-center">
                     <ClipboardList className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-gray-900 mb-2">
-                        Tidak Ada Antrian
+                        {t.guru.antrian.noQueue}
                     </h3>
                     <p className="text-gray-500">
-                        Belum ada siswa yang booking konseling untuk hari ini
+                        {t.guru.antrian.noQueueDesc}
                     </p>
                 </Card>
             )}

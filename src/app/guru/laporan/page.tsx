@@ -15,8 +15,10 @@ import {
     Users,
     CheckCircle2
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LaporanPage() {
+    const { t, language } = useLanguage();
     const [startDate, setStartDate] = useState(() => {
         const date = new Date();
         date.setDate(1); // First day of month
@@ -52,7 +54,8 @@ export default function LaporanPage() {
     const formatPeriod = () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        return `${start.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })} - ${end.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}`;
+        const locale = language === "en" ? "en-US" : "id-ID";
+        return `${start.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })} - ${end.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}`;
     };
 
     return (
@@ -61,10 +64,10 @@ export default function LaporanPage() {
             <div>
                 <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                     <FileBarChart className="w-6 h-6 mr-2 text-blue-600" />
-                    Laporan Konseling
+                    {t.guru.laporan.title}
                 </h1>
                 <p className="text-gray-600 mt-1">
-                    Generate laporan statistik konseling berdasarkan periode
+                    {t.guru.laporan.generateDesc}
                 </p>
             </div>
 
@@ -73,14 +76,14 @@ export default function LaporanPage() {
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <Calendar className="w-5 h-5 mr-2 text-blue-600" />
-                        Pilih Periode
+                        {t.guru.laporan.selectPeriod}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-wrap gap-4 items-end">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Tanggal Mulai
+                                {t.guru.laporan.startDate}
                             </label>
                             <input
                                 type="date"
@@ -91,7 +94,7 @@ export default function LaporanPage() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Tanggal Akhir
+                                {t.guru.laporan.endDate}
                             </label>
                             <input
                                 type="date"
@@ -102,7 +105,7 @@ export default function LaporanPage() {
                         </div>
                         <Button onClick={handleGenerateReport} loading={loading}>
                             <TrendingUp className="w-4 h-4 mr-2" />
-                            Generate Laporan
+                            {t.guru.laporan.generateReport}
                         </Button>
                     </div>
 
@@ -117,7 +120,7 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
-                            Bulan Ini
+                            {t.guru.laporan.presets.thisMonth}
                         </button>
                         <button
                             onClick={() => {
@@ -129,7 +132,7 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
-                            Bulan Lalu
+                            {t.guru.laporan.presets.lastMonth}
                         </button>
                         <button
                             onClick={() => {
@@ -151,7 +154,7 @@ export default function LaporanPage() {
                             }}
                             className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                         >
-                            Semester Ini
+                            {t.guru.laporan.presets.thisSemester}
                         </button>
                     </div>
                 </CardContent>
@@ -166,7 +169,7 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-blue-600">Total Konseling</p>
+                                        <p className="text-sm text-blue-600">{t.common.totalThisMonth}</p>
                                         <p className="text-3xl font-bold text-blue-700">{stats.total}</p>
                                     </div>
                                     <Users className="w-10 h-10 text-blue-400" />
@@ -178,7 +181,7 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-emerald-600">Selesai</p>
+                                        <p className="text-sm text-emerald-600">{t.common.completed}</p>
                                         <p className="text-3xl font-bold text-emerald-700">{stats.completed}</p>
                                     </div>
                                     <CheckCircle2 className="w-10 h-10 text-emerald-400" />
@@ -190,7 +193,7 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-yellow-600">Menunggu</p>
+                                        <p className="text-sm text-yellow-600">{t.common.waiting}</p>
                                         <p className="text-3xl font-bold text-yellow-700">{stats.pending}</p>
                                     </div>
                                     <Calendar className="w-10 h-10 text-yellow-400" />
@@ -202,7 +205,7 @@ export default function LaporanPage() {
                             <CardContent className="p-5">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-purple-600">Tingkat Penyelesaian</p>
+                                        <p className="text-sm text-purple-600">{t.guru.laporan.completionRate}</p>
                                         <p className="text-3xl font-bold text-purple-700">
                                             {stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%
                                         </p>
@@ -216,7 +219,7 @@ export default function LaporanPage() {
                     {/* Category Breakdown */}
                     <Card>
                         <CardHeader>
-                            <CardTitle>Breakdown per Kategori</CardTitle>
+                            <CardTitle>{t.guru.laporan.perCategory}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
@@ -227,7 +230,7 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
-                                            <span className="font-medium text-gray-700">Akademik</span>
+                                            <span className="font-medium text-gray-700">{t.common.akademik}</span>
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.akademik}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -239,7 +242,7 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
-                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}% dari total
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
                                         </p>
                                     </div>
                                 </div>
@@ -251,7 +254,7 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
-                                            <span className="font-medium text-gray-700">Karir</span>
+                                            <span className="font-medium text-gray-700">{t.common.karir}</span>
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.karir}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -263,7 +266,7 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
-                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}% dari total
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
                                         </p>
                                     </div>
                                 </div>
@@ -275,7 +278,7 @@ export default function LaporanPage() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-2">
-                                            <span className="font-medium text-gray-700">Pribadi</span>
+                                            <span className="font-medium text-gray-700">{t.common.pribadi}</span>
                                             <span className="text-gray-900 font-bold">{stats.categoryBreakdown.pribadi}</span>
                                         </div>
                                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -287,7 +290,7 @@ export default function LaporanPage() {
                                             />
                                         </div>
                                         <p className="text-sm text-gray-500 mt-1">
-                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}% dari total
+                                            {stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}% {language === "en" ? "of total" : "dari total"}
                                         </p>
                                     </div>
                                 </div>
@@ -299,19 +302,19 @@ export default function LaporanPage() {
                     <Card className="p-4">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h3 className="font-medium text-gray-900">Ekspor Laporan</h3>
+                                <h3 className="font-medium text-gray-900">{t.guru.laporan.exportReport}</h3>
                                 <p className="text-sm text-gray-500">
-                                    Periode: {formatPeriod()}
+                                    {language === "en" ? "Period" : "Periode"}: {formatPeriod()}
                                 </p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline">
                                     <Download className="w-4 h-4 mr-2" />
-                                    Download PDF
+                                    {t.guru.laporan.downloadPDF}
                                 </Button>
                                 <Button variant="outline">
                                     <Download className="w-4 h-4 mr-2" />
-                                    Download Excel
+                                    {t.guru.laporan.downloadExcel}
                                 </Button>
                             </div>
                         </div>
@@ -324,10 +327,10 @@ export default function LaporanPage() {
                 <Card className="p-12 text-center">
                     <FileBarChart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-gray-900 mb-2">
-                        Generate Laporan
+                        {t.guru.laporan.generateReport}
                     </h3>
                     <p className="text-gray-500">
-                        Pilih periode tanggal dan klik "Generate Laporan" untuk melihat statistik
+                        {t.guru.laporan.emptyState}
                     </p>
                 </Card>
             )}

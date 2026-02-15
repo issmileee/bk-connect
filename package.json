@@ -1,51 +1,48 @@
-### /home/ismail/bk_connect/package.json
-```json
-1: {
-2:   "name": "bk_connect",
-3:   "version": "1.0.0",
-4:   "description": "BK-Connect - Sistem Booking Konseling Digital",
-5:   "scripts": {
-6:     "dev": "next dev",
-7:     "build": "next build",
-8:     "start": "next start",
-9:     "lint": "next lint",
-10:     "db:generate": "prisma generate",
-11:     "db:push": "prisma db push",
-12:     "db:migrate": "prisma migrate dev",
-13:     "db:migrate:deploy": "prisma migrate deploy",
-14:     "db:seed": "tsx prisma/seed.ts",
-15:     "db:studio": "prisma studio",
-16:     "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
-17:     "postinstall": "prisma generate"
-18:   },
-19:   "keywords": [],
-20:   "author": "",
-21:   "license": "ISC",
-22:   "dependencies": {
-23:     "@prisma/client": "^6.19.2",
-24:     "bcryptjs": "^3.0.3",
-25:     "clsx": "^2.1.1",
-26:     "date-fns": "^4.1.0",
-27:     "lucide-react": "^0.563.0",
-28:     "next": "^16.1.6",
-29:     "next-auth": "^5.0.0-beta.30",
-30:     "prisma": "^6.19.2",
-31:     "react": "^18.2.0",
-32:     "react-dom": "^18.2.0"
-33:   },
-34:   "devDependencies": {
-35:     "@types/bcryptjs": "^3.0.0",
-36:     "@types/node": "^25.1.0",
-37:     "@types/react": "^19.2.10",
-38:     "@types/react-dom": "^19.2.3",
-39:     "autoprefixer": "^10.4.23",
-40:     "postcss": "^8.5.6",
-41:     "tailwindcss": "^3.4.19",
-42:     "tsx": "^4.21.0",
-43:     "typescript": "^5.9.3"
-44:   },
-45:   "prisma": {
-46:     "seed": "tsx prisma/seed.ts"
-47:   }
-48: }
-```
+{
+  "name": "bk_connect",
+  "version": "1.0.0",
+  "description": "BK-Connect - Sistem Booking Konseling Digital",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.563.0",
+    "next": "^16.1.6",
+    "next-auth": "^5.0.0-beta.30",
+    "prisma": "^6.19.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^25.1.0",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/Card";
 import { BookOpen, Briefcase, Heart, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function KategoriPage() {
+    const { t } = useLanguage();
+
     const categories = [
         {
             id: "AKADEMIK",
-            title: "Akademik",
-            description: "Nilai turun, kesulitan belajar, masalah dengan pelajaran tertentu",
+            title: t.siswa.booking.categories.akademik.title,
+            description: t.siswa.booking.categories.akademik.desc,
             icon: BookOpen,
             color: "red",
             bgColor: "bg-red-50 hover:bg-red-100",
@@ -19,8 +22,8 @@ export default function KategoriPage() {
         },
         {
             id: "KARIR",
-            title: "Karir",
-            description: "Bingung pilihan kuliah/jurusan, minat bakat, peluang kerja",
+            title: t.siswa.booking.categories.karir.title,
+            description: t.siswa.booking.categories.karir.desc,
             icon: Briefcase,
             color: "amber",
             bgColor: "bg-amber-50 hover:bg-amber-100",
@@ -30,8 +33,8 @@ export default function KategoriPage() {
         },
         {
             id: "PRIBADI",
-            title: "Pribadi",
-            description: "Masalah keluarga, pertemanan, hubungan, atau kesehatan mental",
+            title: t.siswa.booking.categories.pribadi.title,
+            description: t.siswa.booking.categories.pribadi.desc,
             icon: Heart,
             color: "emerald",
             bgColor: "bg-emerald-50 hover:bg-emerald-100",
@@ -45,9 +48,9 @@ export default function KategoriPage() {
         <div className="max-w-2xl mx-auto space-y-6">
             {/* Header */}
             <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900">Pilih Kategori Konseling</h1>
+                <h1 className="text-2xl font-bold text-gray-900">{t.siswa.booking.selectCategory}</h1>
                 <p className="text-gray-600 mt-2">
-                    Apa yang ingin kamu konsultasikan dengan Guru BK?
+                    {t.siswa.booking.categoryQuestion}
                 </p>
             </div>
 
@@ -57,8 +60,8 @@ export default function KategoriPage() {
                     <div key={step} className="flex items-center">
                         <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 1
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-gray-200 text-gray-500"
+                                ? "bg-blue-600 text-white"
+                                : "bg-gray-200 text-gray-500"
                                 }`}
                         >
                             {step}
@@ -104,8 +107,7 @@ export default function KategoriPage() {
             {/* Info */}
             <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 text-center">
                 <p className="text-sm text-blue-700">
-                    💡 Pemilihan kategori membantu Guru BK mempersiapkan sesi konseling
-                    yang lebih tepat untukmu.
+                    💡 {t.siswa.booking.categoryInfo}
                 </p>
             </div>
         </div>

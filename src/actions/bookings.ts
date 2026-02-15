@@ -144,6 +144,28 @@ export async function getStudentBookings(siswaId: string) {
     return bookings;
 }
 
+// Get current/next upcoming booking for student
+export async function getCurrentBooking() {
+    const session = await auth();
+    if (!session?.user?.id) return null;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const booking = await prisma.booking.findFirst({
+        where: {
+            siswaId: session.user.id,
+            date: { gte: today },
+            status: { in: ["PENDING", "CONFIRMED", "IN_PROGRESS"] },
+        },
+        include: {
+            slot: true,
+        },
+        orderBy: { date: "asc" },
+    });
+
+    return booking;
+}
 // Get today's bookings for Guru BK
 export async function getTodayBookings() {
     const today = new Date();

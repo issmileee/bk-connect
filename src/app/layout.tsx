@@ -1,12 +1,14 @@
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/providers/AuthProvider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-    title: "BK-Connect | Sistem Booking Konseling Digital",
-    description: "Platform booking dan manajemen konseling untuk siswa dan guru BK",
+export const metadata: Metadata = {
+    title: "BK-Connect",
+    description: "Sistem Booking Konseling Digital",
 };
 
 export default function RootLayout({
@@ -17,7 +19,9 @@ export default function RootLayout({
     return (
         <html lang="id">
             <body className={inter.className}>
-                <AuthProvider>{children}</AuthProvider>
+                <LanguageProvider>
+                    <AuthProvider>{children}</AuthProvider>
+                </LanguageProvider>
             </body>
         </html>
     );

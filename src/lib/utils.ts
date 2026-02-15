@@ -14,9 +14,9 @@ export function generateBookingCode(): string {
     return `BK-${year}-${timestamp}${random}`;
 }
 
-// Format date to Indonesian locale
-export function formatDate(date: Date): string {
-    return new Intl.DateTimeFormat("id-ID", {
+// Format date to locale
+export function formatDate(date: Date, locale: string = "id-ID"): string {
+    return new Intl.DateTimeFormat(locale, {
         weekday: "long",
         year: "numeric",
         month: "long",
@@ -29,8 +29,11 @@ export function formatTime(time: string): string {
     return time;
 }
 
-// Get day name in Indonesian
-export function getDayName(dayOfWeek: number): string {
+// Get day name (localized via translations)
+export function getDayName(dayOfWeek: number, t?: any): string {
+    if (t?.common?.days) {
+        return t.common.days[dayOfWeek] || "";
+    }
     const days = ["", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
     return days[dayOfWeek] || "";
 }
@@ -73,8 +76,15 @@ export function isWeekday(date: Date): boolean {
     return day >= 1 && day <= 5;
 }
 
-// Get slot type label
-export function getSlotTypeLabel(slotType: string, slotNumber: number | null): string {
+// Get slot type label (localized via translations)
+export function getSlotTypeLabel(slotType: string, slotNumber: number | null, t?: any): string {
+    if (t?.common?.slotTypes) {
+        if (slotType === "SEPULANG_SEKOLAH") {
+            return t.common.slotTypes.sepulangSekolah;
+        }
+        return t.common.slotTypes.jamPelajaran.replace("{n}", slotNumber?.toString() || "");
+    }
+
     if (slotType === "SEPULANG_SEKOLAH") {
         return "Sepulang Sekolah";
     }

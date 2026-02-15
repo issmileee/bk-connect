@@ -18,8 +18,10 @@ import {
 } from "lucide-react";
 import { getProfile, updateProfile, changePassword } from "@/actions/profile";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function SiswaProfilePage() {
+    const { t } = useLanguage();
     const [profile, setProfile] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
@@ -53,9 +55,9 @@ export default function SiswaProfilePage() {
 
         const result = await updateProfile(formData);
         if (result.success) {
-            setMessage({ type: "success", text: "Profil berhasil diperbarui" });
+            setMessage({ type: "success", text: t.siswa.profile.successUpdate });
         } else {
-            setMessage({ type: "error", text: result.error || "Gagal memperbarui profil" });
+            setMessage({ type: "error", text: result.error || t.siswa.profile.errorUpdate });
         }
         setUpdating(false);
     };
@@ -63,7 +65,7 @@ export default function SiswaProfilePage() {
     const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (passwordData.newPassword !== passwordData.confirmPassword) {
-            setMessage({ type: "error", text: "Konfirmasi password tidak cocok" });
+            setMessage({ type: "error", text: t.siswa.profile.passwordMismatch });
             return;
         }
 
@@ -74,10 +76,10 @@ export default function SiswaProfilePage() {
 
         const result = await changePassword(formData);
         if (result.success) {
-            setMessage({ type: "success", text: "Password berhasil diganti" });
+            setMessage({ type: "success", text: t.siswa.profile.successPassword });
             setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
         } else {
-            setMessage({ type: "error", text: result.error || "Gagal mengganti password" });
+            setMessage({ type: "error", text: result.error || t.siswa.profile.errorPassword });
         }
         setUpdating(false);
     };
@@ -104,8 +106,8 @@ export default function SiswaProfilePage() {
     return (
         <div className="max-w-4xl mx-auto space-y-6 pb-12">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Profil Saya</h1>
-                <p className="text-gray-600">Kelola informasi pribadi dan pengaturan akunmu</p>
+                <h1 className="text-2xl font-bold text-gray-900">{t.siswa.profile.title}</h1>
+                <p className="text-gray-600">{t.siswa.profile.desc}</p>
             </div>
 
             {message && (
@@ -149,7 +151,7 @@ export default function SiswaProfilePage() {
                             </div>
                             <div className="mt-4">
                                 <h2 className="text-lg font-bold text-gray-900">{profile?.name}</h2>
-                                <p className="text-sm text-gray-500">{profile?.role}</p>
+                                <p className="text-sm text-gray-500">{t.siswa.nav.siswa}</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -158,7 +160,7 @@ export default function SiswaProfilePage() {
                         <CardHeader className="pb-2">
                             <CardTitle className="text-sm font-medium text-gray-500 uppercase flex items-center gap-2">
                                 <ShieldCheck className="w-4 h-4" />
-                                Status Akun
+                                {t.siswa.profile.accountStatus}
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -175,7 +177,7 @@ export default function SiswaProfilePage() {
                                 </span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-gray-600">Kelas</span>
+                                <span className="text-gray-600">{t.siswa.nav.kelas}</span>
                                 <span className="font-medium text-gray-900">
                                     {profile?.kelas || "-"}
                                 </span>
@@ -188,20 +190,20 @@ export default function SiswaProfilePage() {
                 <div className="md:col-span-2 space-y-6">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Informasi Umum</CardTitle>
+                            <CardTitle>{t.siswa.profile.generalInfo}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleUpdateProfile} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Input
-                                        label="Nama Lengkap"
+                                        label={t.siswa.profile.name}
                                         name="name"
                                         defaultValue={profile?.name}
                                         icon={<User className="w-4 h-4" />}
                                         required
                                     />
                                     <Input
-                                        label="Email"
+                                        label={t.siswa.profile.email}
                                         name="email"
                                         type="email"
                                         defaultValue={profile?.email}
@@ -209,7 +211,7 @@ export default function SiswaProfilePage() {
                                         required
                                     />
                                     <Input
-                                        label="No. HP / WhatsApp"
+                                        label={t.siswa.profile.phone}
                                         name="phone"
                                         defaultValue={profile?.phone}
                                         icon={<Phone className="w-4 h-4" />}
@@ -217,7 +219,7 @@ export default function SiswaProfilePage() {
                                     />
                                     <div className="relative">
                                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                            NIS (Readonly)
+                                            NIS ({t.siswa.profile.readonly})
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -230,7 +232,7 @@ export default function SiswaProfilePage() {
                                     </div>
                                     <div className="relative">
                                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                            NISN (Readonly)
+                                            NISN ({t.siswa.profile.readonly})
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -243,7 +245,7 @@ export default function SiswaProfilePage() {
                                     </div>
                                     <div className="relative">
                                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                            Kelas (Readonly)
+                                            {t.siswa.nav.kelas} ({t.siswa.profile.readonly})
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -257,7 +259,7 @@ export default function SiswaProfilePage() {
                                 </div>
                                 <div className="flex justify-end pt-2">
                                     <Button type="submit" disabled={updating}>
-                                        {updating ? "Menyimpan..." : "Simpan Perubahan"}
+                                        {updating ? t.common.saving : t.common.saveChanges}
                                     </Button>
                                 </div>
                             </form>
@@ -266,14 +268,14 @@ export default function SiswaProfilePage() {
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Ganti Password</CardTitle>
+                            <CardTitle>{t.siswa.profile.changePassword}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleChangePassword} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-2">
                                         <Input
-                                            label="Password Saat Ini"
+                                            label={t.siswa.profile.currentPassword}
                                             type="password"
                                             value={passwordData.currentPassword}
                                             onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
@@ -282,7 +284,7 @@ export default function SiswaProfilePage() {
                                         />
                                     </div>
                                     <Input
-                                        label="Password Baru"
+                                        label={t.siswa.profile.newPassword}
                                         type="password"
                                         value={passwordData.newPassword}
                                         onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
@@ -290,7 +292,7 @@ export default function SiswaProfilePage() {
                                         required
                                     />
                                     <Input
-                                        label="Konfirmasi Password Baru"
+                                        label={t.siswa.profile.confirmPassword}
                                         type="password"
                                         value={passwordData.confirmPassword}
                                         onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
@@ -300,7 +302,7 @@ export default function SiswaProfilePage() {
                                 </div>
                                 <div className="flex justify-end pt-2">
                                     <Button type="submit" variant="outline" disabled={updating}>
-                                        {updating ? "Memproses..." : "Ganti Password"}
+                                        {updating ? t.common.processing : t.siswa.profile.changePassword}
                                     </Button>
                                 </div>
                             </form>
