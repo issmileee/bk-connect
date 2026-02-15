@@ -17,17 +17,18 @@ import { formatDate, getSlotTypeLabel } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { getTranslations } from "@/lib/getTranslations";
 
-export default async function SiswaDetailPage({ params }: { params: { id: string } }) {
+export default async function SiswaDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const { t, language } = await getTranslations();
     const siswa = await prisma.user.findUnique({
-        where: { id: params.id, role: "SISWA" },
+        where: { id, role: "SISWA" },
     });
 
     if (!siswa) {
         notFound();
     }
 
-    const history = await getStudentConsultationHistory(params.id);
+    const history = await getStudentConsultationHistory(id);
 
     // Calculate stats
     const totalConsultations = history.length;
