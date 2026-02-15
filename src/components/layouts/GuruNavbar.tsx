@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
 interface GuruNavbarProps {
     user: {
@@ -78,6 +79,7 @@ export default function GuruNavbar({ user }: GuruNavbarProps) {
 
                     {/* User Info & Logout */}
                     <div className="flex items-center gap-3">
+                        <LanguageSwitcher variant="minimal" className="hidden sm:flex mr-2 bg-slate-700/50" />
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-medium">{user.name}</p>
                             <p className="text-xs text-slate-400">{t.login.teacher}</p>
@@ -103,6 +105,9 @@ export default function GuruNavbar({ user }: GuruNavbarProps) {
                 {/* Mobile Nav */}
                 {mobileOpen && (
                     <div className="lg:hidden py-4 border-t border-slate-700">
+                        <div className="px-4 mb-4">
+                            <LanguageSwitcher />
+                        </div>
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}

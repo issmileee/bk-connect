@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
 interface SiswaNavbarProps {
     user: {
@@ -75,6 +76,7 @@ export default function SiswaNavbar({ user }: SiswaNavbarProps) {
 
                     {/* User Info & Logout */}
                     <div className="flex items-center gap-3">
+                        <LanguageSwitcher variant="minimal" className="hidden sm:flex mr-2" />
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-medium text-gray-900">{user.name}</p>
                             <p className="text-xs text-gray-500">{user.kelas && `${t.siswa.nav.kelas} ${user.kelas}`}</p>
@@ -100,6 +102,9 @@ export default function SiswaNavbar({ user }: SiswaNavbarProps) {
                 {/* Mobile Nav */}
                 {mobileOpen && (
                     <div className="md:hidden py-4 border-t border-gray-100">
+                        <div className="px-4 mb-4">
+                            <LanguageSwitcher />
+                        </div>
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}

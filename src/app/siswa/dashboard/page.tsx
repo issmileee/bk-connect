@@ -183,6 +183,7 @@ import { getTranslations } from "@/lib/getTranslations";
 
 export default async function SiswaDashboard() {
     const { t, language } = await getTranslations();
+    const session = await auth();
     const currentBooking = await getCurrentBooking();
 
     const menuItems = [
@@ -210,7 +211,7 @@ export default async function SiswaDashboard() {
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 leading-tight">
-                        {t.common.hello}, <span className="text-blue-600">{t.siswa.nav.siswa} BK-Connect</span> 👋
+                        {t.common.hello}, <span className="text-blue-600">{session?.user?.name}</span> 👋
                     </h1>
                     <p className="text-gray-500 mt-1">
                         {t.common.welcome}
