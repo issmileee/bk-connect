@@ -1,6 +1,17 @@
 import { auth } from "@/lib/auth";
 import { getStudentBookings } from "@/actions/bookings";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import Badge from "@/components/ui/Badge";
+import Button from "@/components/ui/Button";
+import {
+    History,
+    Calendar,
+    FileText,
+    CheckCircle2,
+    Clock
+} from "lucide-react";
+import Link from "next/link";
+import { formatDate, getSlotTypeLabel } from "@/lib/utils";
 import { getTranslations } from "@/lib/getTranslations";
 
 export default async function HistoryPage() {

@@ -17,6 +17,16 @@ import {
     Bell,
 } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+interface GuruLayoutProps {
+    children: React.ReactNode;
+    user: {
+        name: string;
+    };
+    notificationCount?: number;
+}
+
 export default function GuruLayout({ children, user, notificationCount = 0 }: GuruLayoutProps) {
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -68,7 +78,7 @@ export default function GuruLayout({ children, user, notificationCount = 0 }: Gu
                     <div className="p-4 border-b border-slate-700">
                         <div className="p-3 bg-slate-800/50 rounded-xl">
                             <p className="font-medium text-white">{user.name}</p>
-                            <p className="text-sm text-slate-400">{t.login.teacher}</p>
+                            <p className="text-sm text-slate-400">{t.guru.profile.role}</p>
                         </div>
                     </div>
 

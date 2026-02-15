@@ -15,6 +15,9 @@ import {
 import Link from "next/link";
 import { formatDate, getSlotTypeLabel } from "@/lib/utils";
 import { notFound } from "next/navigation";
+import { getTranslations } from "@/lib/getTranslations";
+
+export default async function SiswaDetailPage({ params }: { params: { id: string } }) {
     const { t, language } = await getTranslations();
     const siswa = await prisma.user.findUnique({
         where: { id: params.id, role: "SISWA" },

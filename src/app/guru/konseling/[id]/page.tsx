@@ -20,6 +20,39 @@ import {
     Save
 } from "lucide-react";
 import { formatDate, getSlotTypeLabel } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+interface BookingDetail {
+    id: string;
+    bookingCode: string;
+    date: string;
+    category: string;
+    complaint: string;
+    status: string;
+    siswa: {
+        id: string;
+        name: string;
+        kelas: string | null;
+        email: string;
+    };
+    slot: {
+        slotNumber: number | null;
+        slotType: string;
+        startTime: string;
+        endTime: string;
+    };
+    result: {
+        id: string;
+        summary: string;
+        solution: string;
+        followUp: string | null;
+        resultStatus: "COMPLETED" | "FOLLOW_UP_NEEDED" | "REFERRED_EXTERNAL";
+    } | null;
+}
+
+export default function KonselingDetailPage() {
+    const router = useRouter();
+    const { id: bookingId } = useParams();
     const { t, language } = useLanguage();
 
     const [booking, setBooking] = useState<BookingDetail | null>(null);

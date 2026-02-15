@@ -82,7 +82,7 @@ export default function GuruNavbar({ user }: GuruNavbarProps) {
                         <LanguageSwitcher variant="minimal" className="hidden sm:flex mr-2 bg-slate-700/50" />
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-medium">{user.name}</p>
-                            <p className="text-xs text-slate-400">{t.login.teacher}</p>
+                            <p className="text-xs text-slate-400">{t.guru.profile.role}</p>
                         </div>
                         <button
                             onClick={() => signOut({ callbackUrl: window.location.origin + "/login" })}

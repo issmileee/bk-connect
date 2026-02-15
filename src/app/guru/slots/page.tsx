@@ -14,6 +14,19 @@ import {
     Loader2
 } from "lucide-react";
 import { getDayName, getSlotTypeLabel } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+interface SlotTemplate {
+    id: string;
+    dayOfWeek: number;
+    slotNumber: number | null;
+    slotType: "JAM_PELAJARAN" | "SEPULANG_SEKOLAH";
+    startTime: string;
+    endTime: string;
+    isActive: boolean;
+}
+
+export default function SlotsPage() {
     const { t, language } = useLanguage();
     const [slots, setSlots] = useState<SlotTemplate[]>([]);
     const [loading, setLoading] = useState(true);
