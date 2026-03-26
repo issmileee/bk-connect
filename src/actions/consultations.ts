@@ -51,11 +51,15 @@ export async function createConsultationResult(data: CreateConsultationResultDat
 
 // Get consultation stats for a date range
 export async function getConsultationStats(startDate: Date, endDate: Date) {
+    // Set endDate to end of day so bookings on the last selected day are included
+    const endOfDay = new Date(endDate);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
     const bookings = await prisma.booking.findMany({
         where: {
             date: {
                 gte: startDate,
-                lte: endDate,
+                lte: endOfDay,
             },
             status: { not: "CANCELLED" },
         },
@@ -66,7 +70,8 @@ export async function getConsultationStats(startDate: Date, endDate: Date) {
 
     const total = bookings.length;
     const completed = bookings.filter((b) => b.status === "COMPLETED").length;
-    const pending = bookings.filter((b) => b.status === "PENDING" || b.status === "CONFIRMED").length;
+    // Include IN_PROGRESS so all non-cancelled bookings are accounted for
+    const pending = bookings.filter((b) => b.status === "PENDING" || b.status === "CONFIRMED" || b.status === "IN_PROGRESS").length;
 
     const categoryBreakdown = {
         akademik: bookings.filter((b) => b.category === "AKADEMIK").length,

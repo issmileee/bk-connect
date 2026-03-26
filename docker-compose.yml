@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bk_connect
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bk_connect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      # Use 'db' as hostname for the database inside Docker network
+      DATABASE_URL: "postgresql://postgres:password@db:5432/bk_connect?schema=public"
+      DIRECT_URL: "postgresql://postgres:password@db:5432/bk_connect?schema=public"
+      # Generate secret with: openssl rand -base64 32
+      AUTH_SECRET: "your-super-secret-key-change-in-production-must-be-32-chars-minimum"
+      AUTH_TRUST_HOST: "true"
+      NEXTAUTH_URL: "http://localhost:3060"
+    ports:
+      - "3060:3000" # Map host port 3060 to container port 3000
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
