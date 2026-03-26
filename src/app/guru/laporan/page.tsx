@@ -16,6 +16,9 @@ import {
     CheckCircle2
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 
 export default function LaporanPage() {
     const { t, language } = useLanguage();
@@ -49,6 +52,70 @@ export default function LaporanPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleDownloadPDF = () => {
+        if (!stats) return;
+        const doc = new jsPDF();
+        const period = formatPeriod();
+        const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
+
+        doc.setFontSize(16);
+        doc.text("Laporan Konseling", 14, 18);
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(`Periode: ${period}`, 14, 26);
+
+        autoTable(doc, {
+            startY: 32,
+            head: [["Keterangan", "Jumlah"]],
+            body: [
+                ["Total Konsultasi", stats.total],
+                ["Selesai", stats.completed],
+                ["Menunggu / Berlangsung", stats.pending],
+                ["Tingkat Penyelesaian", `${completionRate}%`],
+            ],
+        });
+
+        autoTable(doc, {
+            startY: (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10,
+            head: [["Kategori", "Jumlah", "Persentase"]],
+            body: [
+                ["Akademik", stats.categoryBreakdown.akademik, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}%`],
+                ["Karir", stats.categoryBreakdown.karir, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}%`],
+                ["Pribadi", stats.categoryBreakdown.pribadi, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}%`],
+            ],
+        });
+
+        doc.save(`laporan-konseling-${startDate}-${endDate}.pdf`);
+    };
+
+    const handleDownloadExcel = () => {
+        if (!stats) return;
+        const period = formatPeriod();
+        const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
+
+        const ringkasan = [
+            ["Laporan Konseling"],
+            [`Periode: ${period}`],
+            [],
+            ["Keterangan", "Jumlah"],
+            ["Total Konsultasi", stats.total],
+            ["Selesai", stats.completed],
+            ["Menunggu / Berlangsung", stats.pending],
+            ["Tingkat Penyelesaian", `${completionRate}%`],
+            [],
+            ["Breakdown per Kategori"],
+            ["Kategori", "Jumlah", "Persentase"],
+            ["Akademik", stats.categoryBreakdown.akademik, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.akademik / stats.total) * 100) : 0}%`],
+            ["Karir", stats.categoryBreakdown.karir, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.karir / stats.total) * 100) : 0}%`],
+            ["Pribadi", stats.categoryBreakdown.pribadi, `${stats.total > 0 ? Math.round((stats.categoryBreakdown.pribadi / stats.total) * 100) : 0}%`],
+        ];
+
+        const ws = XLSX.utils.aoa_to_sheet(ringkasan);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Laporan");
+        XLSX.writeFile(wb, `laporan-konseling-${startDate}-${endDate}.xlsx`);
     };
 
     const formatPeriod = () => {
@@ -308,11 +375,11 @@ export default function LaporanPage() {
                                 </p>
                             </div>
                             <div className="flex gap-2">
-                                <Button variant="outline">
+                                <Button variant="outline" onClick={handleDownloadPDF}>
                                     <Download className="w-4 h-4 mr-2" />
                                     {t.guru.laporan.downloadPDF}
                                 </Button>
-                                <Button variant="outline">
+                                <Button variant="outline" onClick={handleDownloadExcel}>
                                     <Download className="w-4 h-4 mr-2" />
                                     {t.guru.laporan.downloadExcel}
                                 </Button>
