@@ -12,6 +12,16 @@ interface CreateBookingData {
     category: Category;
     complaint: string;
     attachmentUrl?: string;
+    guruBkId?: string;
+}
+
+// Get all Guru BK users
+export async function getGuruBKList() {
+    return prisma.user.findMany({
+        where: { role: "GURU_BK" },
+        select: { id: true, name: true, email: true, image: true },
+        orderBy: { name: "asc" },
+    });
 }
 
 // Check if slot is available
@@ -113,6 +123,7 @@ export async function createBooking(data: CreateBookingData) {
                 category: data.category,
                 complaint: data.complaint,
                 attachmentUrl: data.attachmentUrl,
+                guruBkId: data.guruBkId,
                 status: "PENDING",
             },
             include: {
@@ -166,8 +177,11 @@ export async function getCurrentBooking() {
 
     return booking;
 }
-// Get today's bookings for Guru BK
+// Get today's bookings for Guru BK (filtered by logged-in guru)
 export async function getTodayBookings() {
+    const session = await auth();
+    if (!session?.user?.id) return [];
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
@@ -175,6 +189,7 @@ export async function getTodayBookings() {
 
     const bookings = await prisma.booking.findMany({
         where: {
+            guruBkId: session.user.id,
             date: {
                 gte: today,
                 lt: tomorrow,

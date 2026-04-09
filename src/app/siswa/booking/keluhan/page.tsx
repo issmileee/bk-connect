@@ -24,7 +24,7 @@ export default function KeluhanPage() {
         }
         // Save to local storage for now or pass via URL
         localStorage.setItem("temp_complaint", complaint);
-        router.push(`/siswa/booking/jadwal?category=${category}`);
+        router.push(`/siswa/booking/guru?category=${category}`);
     };
 
     return (
@@ -49,7 +49,7 @@ export default function KeluhanPage() {
 
             {/* Steps Indicator */}
             <div className="flex items-center justify-center gap-2">
-                {[1, 2, 3, 4].map((step) => (
+                {[1, 2, 3, 4, 5].map((step) => (
                     <div key={step} className="flex items-center">
                         <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 2
@@ -61,7 +61,7 @@ export default function KeluhanPage() {
                         >
                             {step}
                         </div>
-                        {step < 4 && <div className="w-8 h-1 bg-gray-200 mx-1" />}
+                        {step < 5 && <div className="w-8 h-1 bg-gray-200 mx-1" />}
                     </div>
                 ))}
             </div>

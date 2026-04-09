@@ -15,7 +15,8 @@ import {
     CheckCircle2,
     AlertCircle,
     Home,
-    History
+    History,
+    UserCheck
 } from "lucide-react";
 import Link from "next/link";
 import { formatDate, getSlotTypeLabel } from "@/lib/utils";
@@ -27,6 +28,8 @@ interface BookingData {
     complaint: string;
     date: string;
     slotId: string;
+    guruBkId: string;
+    guruName: string;
     slotInfo: {
         slotNumber: number | null;
         slotType: string;
@@ -50,17 +53,21 @@ export default function KonfirmasiPage() {
     useEffect(() => {
         const tempBooking = sessionStorage.getItem("temp_booking");
         const tempComplaint = localStorage.getItem("temp_complaint");
+        const tempGuru = sessionStorage.getItem("temp_guru");
 
-        if (!tempBooking || !tempComplaint || !categoryQuery) {
+        if (!tempBooking || !tempComplaint || !tempGuru || !categoryQuery) {
             router.push("/siswa/booking/kategori");
             return;
         }
 
         const bookingJson = JSON.parse(tempBooking);
+        const guruJson = JSON.parse(tempGuru);
         setBookingData({
             ...bookingJson,
             complaint: tempComplaint,
-            category: categoryQuery
+            category: categoryQuery,
+            guruBkId: guruJson.id,
+            guruName: guruJson.name,
         });
     }, [router, categoryQuery]);
 
@@ -76,11 +83,13 @@ export default function KonfirmasiPage() {
                 date: new Date(bookingData.date),
                 category: bookingData.category,
                 complaint: bookingData.complaint,
+                guruBkId: bookingData.guruBkId,
             });
 
             setBookingCode(result.bookingCode);
             setSuccess(true);
             sessionStorage.removeItem("temp_booking");
+            sessionStorage.removeItem("temp_guru");
             localStorage.removeItem("temp_complaint");
         } catch (err: any) {
             setError(err.message || t.common.error);
@@ -165,12 +174,12 @@ export default function KonfirmasiPage() {
 
             {/* Steps Indicator */}
             <div className="flex items-center justify-center gap-2">
-                {[1, 2, 3, 4].map((step) => (
+                {[1, 2, 3, 4, 5].map((step) => (
                     <div key={step} className="flex items-center">
                         <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                            {step < 4 ? <Check className="w-4 h-4" /> : step}
+                            {step < 5 ? <Check className="w-4 h-4" /> : step}
                         </div>
-                        {step < 4 && <div className="w-8 h-1 mx-1 bg-blue-600" />}
+                        {step < 5 && <div className="w-8 h-1 mx-1 bg-blue-600" />}
                     </div>
                 ))}
             </div>
@@ -198,6 +207,15 @@ export default function KonfirmasiPage() {
                         <Badge variant={bookingData.category.toLowerCase() as any} size="lg">
                             {t.common[bookingData.category.toLowerCase() as "akademik" | "karir" | "pribadi"] || bookingData.category}
                         </Badge>
+                    </div>
+
+                    {/* Guru BK */}
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                        <div className="flex items-center">
+                            <UserCheck className="w-5 h-5 text-gray-400 mr-3" />
+                            <span className="text-gray-600">Guru BK</span>
+                        </div>
+                        <span className="font-bold text-gray-900">{bookingData.guruName}</span>
                     </div>
 
                     {/* Date */}

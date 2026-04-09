@@ -107,19 +107,19 @@ export default function JadwalPage() {
 
             {/* Steps Indicator */}
             <div className="flex items-center justify-center gap-2">
-                {[1, 2, 3, 4].map((step) => (
+                {[1, 2, 3, 4, 5].map((step) => (
                     <div key={step} className="flex items-center">
                         <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 3
+                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 4
                                 ? "bg-blue-600 text-white"
-                                : step < 3
+                                : step < 4
                                     ? "bg-blue-100 text-blue-600"
                                     : "bg-gray-200 text-gray-500"
                                 }`}
                         >
                             {step}
                         </div>
-                        {step < 4 && <div className="w-8 h-1 bg-gray-200 mx-1" />}
+                        {step < 5 && <div className="w-8 h-1 bg-gray-200 mx-1" />}
                     </div>
                 ))}
             </div>
